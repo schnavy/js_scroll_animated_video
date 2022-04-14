@@ -3,12 +3,12 @@ var listOfVideoSources = [
   // 'http://umlautfilms.de/wp-content/uploads/2022/01/Komp-1_1_2-1.mp4',
   // 'http://umlautfilms.de/wp-content/uploads/2022/01/Komp-1_1_3-1.mp4',
   // 'http://umlautfilms.de/wp-content/uploads/2022/01/Komp-1_1_5-1.mp4'
-  // 'https://umlautfilms.de/wp-content/uploads/2022/01/Type_1_desk.mp4',
-  // 'https://umlautfilms.de/wp-content/uploads/2022/01/Type_2_desk.mp4',
-  // 'https://umlautfilms.de/wp-content/uploads/2022/01/Type_3_desk.mp4',
-  'webm/Type_1_desk.webm',
-  'webm/Type_2_desk.webm',
-  'webm/Type_3_desk.webm'
+  'https://umlautfilms.de/wp-content/uploads/2022/01/Type_1_desk.mp4',
+  'https://umlautfilms.de/wp-content/uploads/2022/01/Type_2_desk.mp4',
+  'https://umlautfilms.de/wp-content/uploads/2022/01/Type_3_desk.mp4',
+  // 'webm/Type_1_desk.webm',
+  // 'webm/Type_2_desk.webm',
+  // 'webm/Type_3_desk.webm'
 
 ]
 let vid = document.querySelector('.cover-region .background-video video')
@@ -46,18 +46,11 @@ vid.addEventListener('loadedmetadata', function () {
 //   loadVideo(currentVideoIndex)
 // };
 
-function scrollPlay () {
 
-
-  var scrollTop = window.pageYOffset;
-  
-
-  var frameNumber = scrollTop / playbackConst
-  
-  
-    console.log(playbackConst);
-  vid.currentTime = frameNumber
-  window.requestAnimationFrame(scrollPlay)
+function scrollPlay(){  
+  var frameNumber  = window.pageYOffset/playbackConst;
+  vid.currentTime  = frameNumber;
+  window.requestAnimationFrame(scrollPlay);
 }
 
 

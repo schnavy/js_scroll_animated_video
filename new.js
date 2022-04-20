@@ -1,72 +1,71 @@
+let counter = 0
 
-let counter = 0;
+const html = document.documentElement
+const canvas = document.querySelector('canvas')
+const context = canvas.getContext('2d')
 
-function pad(num) {
-  var s = "000000000" + num;
-  return s.substr(s.length - 5);
+const FRAME_COUNT = 29
+const SPEED = 50
+
+function pad (num) {
+  var s = '000000000' + num
+  return s.substr(s.length - 5)
 }
 
-function currentFrame(num) {
-  return "public/01_web/frame" +pad(num)+ ".jpg"
+function currentFrame (num) {
+  return 'public/01_web/frame' + pad(num) + '.jpg'
 }
 
-
-
-const html = document.documentElement;
-const canvas = document.querySelector("canvas");
-const context = canvas.getContext("2d");
-
-const frameCount = 29;
 
 const preloadImages = () => {
   for (let i = 1; i < frameCount; i++) {
-    const img = new Image();
-    img.src = currentFrame(i);
+    const img = new Image()
+    img.src = currentFrame(i)
   }
-};
+}
 
 const img = new Image()
-img.src = currentFrame(1);
-canvas.width=1158;
-canvas.height=770;
-img.onload=function(){
-  context.drawImage(img, 0, 0);
+img.src = currentFrame(0)
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+img.onload = function () {
+  context.drawImage(img, 0, 0)
 }
 
 const updateImage = index => {
-  img.src = currentFrame(index);
-  context.drawImage(img, 0, 0);
+  img.src = currentFrame(index)
+  context.drawImage(img, 0, 0)
 }
 
-window.addEventListener('scroll', () => {  
-  const scrollTop = html.scrollTop;
-  const maxScrollTop = html.scrollHeight - window.innerHeight;
-  const scrollFraction = scrollTop / maxScrollTop;
-  const frameIndex = Math.min(
-    frameCount - 1,
-    Math.ceil(scrollFraction * frameCount)
-    );
-    
-    console.log(frameIndex);
-  requestAnimationFrame(() => updateImage(frameIndex + 1))
-});
+
+
+
+document.addEventListener('wheel', event => {
+  if (checkScrollDirectionIsUp(event)) {
+    counter-= 1+SPEED/10
+    if (counter < 0) {
+      counter = FRAME_COUNT
+    }
+  } else {
+    counter+= 1+SPEED/10
+    if (counter > FRAME_COUNT) {
+      counter = 0
+    }
+  }
+
+
+  requestAnimationFrame(() => updateImage(Math.floor(counter)))
+
+})
+
+function checkScrollDirectionIsUp (event) {
+  if (event.wheelDelta) {
+    return event.wheelDelta > 0
+  }
+  return event.deltaY < 0
+}
 
 preloadImages()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // var currentVideoIndex = 0
 // var listOfVideoSources = [
@@ -76,7 +75,7 @@ preloadImages()
 //   // 'https://umlautfilms.de/wp-content/uploads/2022/01/Type_1_desk.mp4',
 //   // 'https://umlautfilms.de/wp-content/uploads/2022/01/Type_2_desk.mp4',
 //   // 'https://umlautfilms.de/wp-content/uploads/2022/01/Type_3_desk.mp4',
-  
+
 //   'webm/Chrome_ImF.webm',
 //   'webm/Type_1_desk.webm',
 //   'webm/Type_2_desk.webm',
@@ -93,13 +92,10 @@ preloadImages()
 
 // let height = document.querySelector(".lay-content").clientHeight
 
-
 // window.onload = () => {
-  
+
 //   currentVideoIndex = getRandomIndex()
 //   loadVideo(currentVideoIndex)
-  
-  
 
 // }
 
@@ -111,23 +107,17 @@ preloadImages()
 
 // })
 
-
 // // video.onended = function(e) {
 // //   console.log("ende");
 // //   currentVideoIndex = getRandomIndex()
 // //   loadVideo(currentVideoIndex)
 // // };
 
-
-// function scrollPlay(){  
+// function scrollPlay(){
 //   var frameNumber  = window.pageYOffset/playbackConst;
 //   vid.currentTime  = frameNumber;
 //   window.requestAnimationFrame(scrollPlay);
 // }
-
-
-
-
 
 // function loadVideo (currentVideoIndex) {
 //   source.setAttribute('src', listOfVideoSources[currentVideoIndex])
@@ -143,5 +133,3 @@ preloadImages()
 //   let r = Math.floor(listOfVideoSources.length * Math.random())
 //   return r
 // }
-
-

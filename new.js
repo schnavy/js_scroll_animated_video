@@ -17,14 +17,16 @@ function pad (num) {
 }
 
 function currentFrame (num) {
-  console.log(pad(num % FRAME_COUNT));
+  console.log(pad(num % FRAME_COUNT))
+  if(IS_TOUCH){
+    num = num % FRAME_COUNT + 1
+  }
   if (IS_MOBILE) {
-    return 'public/02_web/frame' + pad(num % FRAME_COUNT +1) + '.jpg'
-  }else{
-    return 'public/01_web/frame' + pad(num % FRAME_COUNT +1) + '.jpg'
+    return 'public/02_web/frame' + pad(num) + '.jpg'
+  } else {
+    return 'public/01_web/frame' + pad(num) + '.jpg'
   }
 }
-
 
 const preloadImages = () => {
   for (let i = 1; i < FRAME_COUNT; i++) {
@@ -39,16 +41,26 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 img.onload = function () {
   let size = Math.max(window.innerWidth, window.innerHeight)
-  context.drawImage(img, canvas.width / 2 - size / 2, canvas.height / 2 - size / 2,size, size)
+  context.drawImage(
+    img,
+    canvas.width / 2 - size / 2,
+    canvas.height / 2 - size / 2,
+    size,
+    size
+  )
 }
 
 const updateImage = index => {
-  
   let size = Math.max(window.innerWidth, window.innerHeight)
   img.src = currentFrame(index)
-  context.drawImage(img, canvas.width / 2 - size / 2, canvas.height / 2 - size / 2,size, size)
+  context.drawImage(
+    img,
+    canvas.width / 2 - size / 2,
+    canvas.height / 2 - size / 2,
+    size,
+    size
+  )
 }
-
 
 function checkScrollDirectionIsUp (event) {
   if (event.wheelDelta) {
@@ -57,36 +69,28 @@ function checkScrollDirectionIsUp (event) {
   return event.deltaY < 0
 }
 
-
 document.addEventListener('scroll', event => {
+  if (IS_TOUCH) {
+    const scrollTop = html.scrollTop
+    const tmp = scrollTop * 0.1
 
-
-  if(IS_TOUCH){
-    const scrollTop = html.scrollTop;
-    const tmp = scrollTop *0.1
-    
     counter = Math.floor(tmp)
-    
-  
-  
-  }else{
+    requestAnimationFrame(() => updateImage(counter))
+  } else {
     if (checkScrollDirectionIsUp(event)) {
-      counter-= 1+SPEED/10
+      counter -= 1 + SPEED / 10
       if (counter < 0) {
         counter = FRAME_COUNT
       }
     } else {
-      counter+= 1+SPEED/10
+      counter += 1 + SPEED / 10
       if (counter > FRAME_COUNT) {
         counter = 0
       }
     }
-
+    requestAnimationFrame(() => updateImage(counter))
   }
 
-
-  requestAnimationFrame(() => updateImage(counter))
 })
-
 
 preloadImages()

@@ -15,3 +15,9 @@ canvas {
     height: 100vh;
     object-fit: cover;
   }
+  @media(max-width: 900px){
+    video{
+        width: 100vw;
+        height: 120vh;    
+      }
+  }

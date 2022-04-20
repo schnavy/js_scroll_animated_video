@@ -1,3 +1,6 @@
+const IS_TOUCH = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0
+let IS_MOBILE = window.innerWidth <= 1000
+
 let counter = 0
 
 const html = document.documentElement
@@ -15,7 +18,11 @@ function pad (num) {
 
 function currentFrame (num) {
   console.log(pad(num % FRAME_COUNT));
-  return 'public/01_web/frame' + pad(num % FRAME_COUNT +1) + '.jpg'
+  if (IS_MOBILE) {
+    return 'public/02_web/frame' + pad(num % FRAME_COUNT +1) + '.jpg'
+  }else{
+    return 'public/01_web/frame' + pad(num % FRAME_COUNT +1) + '.jpg'
+  }
 }
 
 

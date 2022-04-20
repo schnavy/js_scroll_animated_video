@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
     <style>
         *{
@@ -11,7 +12,7 @@
             margin: 0;
         }
             .lay-content{
-            height:12000px;
+            height:3000px;
             
         }
         .background-video video{
@@ -24,12 +25,13 @@
     <div class="lay-content" >
         <div class="cover-region">
             <div class="background-video">
-                <video muted autobuffer preload>
-                    <source src="" type="video/webm">
+                <video muted autoplay preload>
+                    <source src="public/BG_Desktop.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
     </div>
+    <canvas id="frame-overlay" />
 </body>
 <footer>
     <script src="new.js"></script>

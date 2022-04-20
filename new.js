@@ -1,15 +1,14 @@
 const IS_TOUCH = 'ontouchstart' in window || navigator.msMaxTouchPoints > 0
 let IS_MOBILE = window.innerWidth <= 1000
 
+const FRAME_COUNT = 29
+const SPEED = 30
 let counter = 0
+let size = updateSize()
 
 const html = document.documentElement
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
-
-const FRAME_COUNT = 29
-// const MAX_FRAMES = 2000
-const SPEED = 50
 
 function pad (num) {
   var s = '000000000' + num
@@ -18,8 +17,8 @@ function pad (num) {
 
 function currentFrame (num) {
   console.log(pad(num % FRAME_COUNT))
-  if(IS_TOUCH){
-    num = num % FRAME_COUNT + 1
+  if (IS_TOUCH) {
+    num = (num % FRAME_COUNT) + 1
   }
   if (IS_MOBILE) {
     return 'public/02_web/frame' + pad(num) + '.jpg'
@@ -62,6 +61,14 @@ const updateImage = index => {
   )
 }
 
+function updateSize () {
+  if (IS_MOBILE) {
+    return Math.max(window.innerWidth, window.innerHeight + 200)
+  } else {
+    return Math.max(window.innerWidth, window.innerHeight)
+  }
+}
+
 function checkScrollDirectionIsUp (event) {
   if (event.wheelDelta) {
     return event.wheelDelta > 0
@@ -69,14 +76,24 @@ function checkScrollDirectionIsUp (event) {
   return event.deltaY < 0
 }
 
-document.addEventListener('scroll', event => {
-  if (IS_TOUCH) {
+document.addEventListener('resize', e => {
+  size = updateSize()
+})
+
+
+if (IS_TOUCH) {
+
+  document.addEventListener('scroll', event => {
     const scrollTop = html.scrollTop
     const tmp = scrollTop * 0.1
 
     counter = Math.floor(tmp)
     requestAnimationFrame(() => updateImage(counter))
-  } else {
+  })
+
+} else {
+
+  document.addEventListener('wheel', event => {
     if (checkScrollDirectionIsUp(event)) {
       counter -= 1 + SPEED / 10
       if (counter < 0) {
@@ -89,8 +106,8 @@ document.addEventListener('scroll', event => {
       }
     }
     requestAnimationFrame(() => updateImage(counter))
-  }
+  })
 
-})
+}
 
 preloadImages()

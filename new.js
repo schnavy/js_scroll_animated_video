@@ -18,7 +18,7 @@ function currentFrame (num) {
 
 
 const preloadImages = () => {
-  for (let i = 1; i < frameCount; i++) {
+  for (let i = 1; i < FRAME_COUNT; i++) {
     const img = new Image()
     img.src = currentFrame(i)
   }

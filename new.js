@@ -29,18 +29,21 @@ img.src = currentFrame(0)
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 img.onload = function () {
-  context.drawImage(img, 0, 0)
+  let size = Math.max(window.innerWidth, window.innerHeight)
+  context.drawImage(img, canvas.width / 2 - size / 2, canvas.height / 2 - size / 2,size, size)
 }
 
 const updateImage = index => {
+  
+  let size = Math.max(window.innerWidth, window.innerHeight)
   img.src = currentFrame(index)
-  context.drawImage(img, 0, 0)
+  context.drawImage(img, canvas.width / 2 - size / 2, canvas.height / 2 - size / 2,size, size)
 }
 
 
 
 
-document.addEventListener('wheel', event => {
+document.addEventListener('scroll', event => {
   if (checkScrollDirectionIsUp(event)) {
     counter-= 1+SPEED/10
     if (counter < 0) {

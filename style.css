@@ -6,6 +6,7 @@ canvas {
     width: 100vw;
     height: 100vh;
     object-fit: cover;
+    object-position: center;
     mix-blend-mode:screen;
   }
 

@@ -59,32 +59,31 @@ function checkScrollDirectionIsUp (event) {
 
 
 document.addEventListener('scroll', event => {
-  // if (checkScrollDirectionIsUp(event)) {
-  //   counter-= 1+SPEED/10
-  //   if (counter < 0) {
-  //     counter = FRAME_COUNT
-  //   }
-  // } else {
-  //   counter+= 1+SPEED/10
-  //   if (counter > FRAME_COUNT) {
-  //     counter = 0
-  //   }
-  // }
 
-  const scrollTop = html.scrollTop;
-  // const maxScrollTop = html.scrollHeight - window.innerHeight;
-  // const scrollFraction = scrollTop / maxScrollTop;
-  // const frameIndex = Math.floor(scrollFraction * maxScrollTop)
 
-  const tmp = scrollTop *0.1
+  if(IS_TOUCH){
+    const scrollTop = html.scrollTop;
+    const tmp = scrollTop *0.1
+    
+    counter = Math.floor(tmp)
+    
   
-  counter = Math.floor(tmp)
   
+  }else{
+    if (checkScrollDirectionIsUp(event)) {
+      counter-= 1+SPEED/10
+      if (counter < 0) {
+        counter = FRAME_COUNT
+      }
+    } else {
+      counter+= 1+SPEED/10
+      if (counter > FRAME_COUNT) {
+        counter = 0
+      }
+    }
 
+  }
 
-
-
-console.log(counter);
 
   requestAnimationFrame(() => updateImage(counter))
 })

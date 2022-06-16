@@ -21,9 +21,10 @@ function currentFrame (num) {
     num = (num % FRAME_COUNT) + 1
   }
   if (IS_MOBILE) {
-    return 'public/02_web/frame' + pad(num) + '.jpg'
+    
+    return 'https://umlautfilms.de/wp-content/uploads/2022/06/Echo-Umlaut_mobile_' + pad(num) + '.jpg'
   } else {
-    return 'public/01_web/frame' + pad(num) + '.jpg'
+    return 'https://umlautfilms.de/wp-content/uploads/2022/06/Echo-Umlaut_' + pad(num) + '.jpg'
   }
 }
 
@@ -87,7 +88,7 @@ if (IS_TOUCH) {
     const scrollTop = html.scrollTop
     const tmp = scrollTop * 0.1
 
-    counter = Math.floor(tmp)
+    counter = Math.floor(tmp % FRAME_COUNT)
     requestAnimationFrame(() => updateImage(counter))
   })
 
@@ -97,11 +98,11 @@ if (IS_TOUCH) {
     if (checkScrollDirectionIsUp(event)) {
       counter -= 1 + SPEED / 10
       if (counter < 0) {
-        counter = FRAME_COUNT
+        counter = FRAME_COUNT -1
       }
     } else {
       counter += 1 + SPEED / 10
-      if (counter > FRAME_COUNT) {
+      if (counter >= FRAME_COUNT) {
         counter = 0
       }
     }
